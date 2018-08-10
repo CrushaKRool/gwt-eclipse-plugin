@@ -12,7 +12,7 @@
     <tycho.version>1.0.0</tycho.version>
     <tycho-extras.version>1.0.0</tycho-extras.version> <!-- TODO Remove this tag later -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <eclipse.target>mars</eclipse.target> <!-- TODO change to neon -->
+    <eclipse.target>oxygen</eclipse.target> <!-- TODO change to photon -->
 
     <!-- Repositories that Tycho will use to resolve compilation dependencies. -->
     <eclipse-repo.url>http://download.eclipse.org/releases/${eclipse.target}</eclipse-repo.url>
@@ -259,8 +259,8 @@
       <activation>
         <!-- Default target if no eclipse.target specified. -->
         <property>
-          <name>!eclipse.target</name>
-          <!-- when no longer the default: <name>eclipse.target</name> <value>mars</value> -->
+          <name>eclipse.target</name>
+          <value>mars</value>
         </property>
       </activation>
       <properties>
@@ -328,8 +328,7 @@
       <id>build-eclipse-oxygen</id>
       <activation>
         <property>
-          <name>eclipse.target</name>
-          <value>oxygen</value>
+          <name>!eclipse.target</name>
         </property>
       </activation>
       <properties>
