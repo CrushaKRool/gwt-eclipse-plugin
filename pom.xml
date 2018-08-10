@@ -12,7 +12,7 @@
     <tycho.version>1.0.0</tycho.version>
     <tycho-extras.version>1.0.0</tycho-extras.version> <!-- TODO Remove this tag later -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <eclipse.target>oxygen</eclipse.target> <!-- TODO change to neon -->
+    <eclipse.target>oxygen</eclipse.target> <!-- TODO change to photon -->
 
     <!-- Repositories that Tycho will use to resolve compilation dependencies. -->
     <eclipse-repo.url>http://download.eclipse.org/releases/${eclipse.target}</eclipse-repo.url>
@@ -75,6 +75,8 @@
     <!-- GWT Facet -->
     <module>plugins/com.gwtplugins.gwt.eclipse.wtp</module>
     <module>plugins/com.gwtplugins.gwt.eclipse.wtp.maven</module>
+    <module>plugins/com.gwtplugins.gwt.eclipse.wtp.test</module>
+    <module>plugins/com.gwtplugins.gwt.eclipse.wtp.maven.test</module>
 
     <!-- SDK Bundles -->
     <module>plugins/com.gwtplugins.gwt.eclipse.sdkbundle.gwt27</module>
@@ -251,13 +253,82 @@
         <os-jvm-flags>-XstartOnFirstThread</os-jvm-flags>
       </properties>
     </profile>
+
+    <profile>
+      <id>build-eclipse-mars</id>
+      <activation>
+        <!-- Default target if no eclipse.target specified. -->
+        <property>
+          <name>eclipse.target</name>
+          <value>mars</value>
+        </property>
+      </activation>
+      <properties>
+        <!-- <jettyMinVersion>9.1</jettyMinVersion> -->
+        <!-- <jettyMaxVersion>9.3</jettyMaxVersion> -->
+      </properties>
+      <!-- build against a known target platform -->
+      <modules>
+        <module>eclipse/mars</module>
+      </modules>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>target-platform-configuration</artifactId>
+            <configuration>
+              <target>
+                <artifact>
+                  <groupId>com.gwtplugins.eclipse</groupId>
+                  <artifactId>gwt-eclipse-mars</artifactId>
+                  <version>4.5.0-SNAPSHOT</version>
+                </artifact>
+              </target>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+
+    <profile>
+      <id>build-eclipse-neon</id>
+      <activation>
+        <property>
+          <name>eclipse.target</name>
+          <value>neon</value>
+        </property>
+      </activation>
+      <properties>
+        <!-- <jettyMinVersion>9.3</jettyMinVersion> -->
+        <!-- <jettyMaxVersion>9.4</jettyMaxVersion> -->
+      </properties>
+      <modules>
+        <module>eclipse/neon</module>
+      </modules>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>target-platform-configuration</artifactId>
+            <configuration>
+              <target>
+                <artifact>
+                  <groupId>com.gwtplugins.eclipse</groupId>
+                  <artifactId>gwt-eclipse-neon</artifactId>
+                  <version>4.6.0-SNAPSHOT</version>
+                </artifact>
+              </target>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
     
     <profile>
       <id>build-eclipse-oxygen</id>
       <activation>
         <property>
-          <name>eclipse.target</name>
-          <value>oxygen</value>
+          <name>!eclipse.target</name>
         </property>
       </activation>
       <properties>
