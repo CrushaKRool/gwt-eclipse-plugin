@@ -252,19 +252,16 @@ public class MockILaunchConfiguration implements ILaunchConfiguration {
 
       @Override
       public ILaunchConfiguration[] getPrototypes() throws CoreException {
-        // TODO(${user}): Auto-generated method stub
         return null;
       }
 
       @Override
       public ILaunchConfigurationWorkingCopy newPrototypeInstance(IContainer arg0, String arg1) throws CoreException {
-        // TODO(${user}): Auto-generated method stub
         return null;
       }
 
       @Override
       public boolean supportsPrototypes() {
-        // TODO(${user}): Auto-generated method stub
         return false;
       }
     };
@@ -325,75 +322,43 @@ public class MockILaunchConfiguration implements ILaunchConfiguration {
     return false;
   }
 
-  /* (non-Javadoc)
-   * @see org.eclipse.debug.core.ILaunchConfiguration#delete(int)
-   */
   @Override
   public void delete(int arg0) throws CoreException {
-    // TODO(${user}): Auto-generated method stub
 
   }
 
-  /* (non-Javadoc)
-   * @see org.eclipse.debug.core.ILaunchConfiguration#getKind()
-   */
   @Override
   public int getKind() throws CoreException {
-    // TODO(${user}): Auto-generated method stub
     return 0;
   }
 
-  /* (non-Javadoc)
-   * @see org.eclipse.debug.core.ILaunchConfiguration#getPrototype()
-   */
   @Override
   public ILaunchConfiguration getPrototype() throws CoreException {
-    // TODO(${user}): Auto-generated method stub
     return null;
   }
 
-  /* (non-Javadoc)
-   * @see org.eclipse.debug.core.ILaunchConfiguration#getPrototypeChildren()
-   */
   @Override
   public Collection<ILaunchConfiguration> getPrototypeChildren() throws CoreException {
-    // TODO(${user}): Auto-generated method stub
     return null;
   }
 
-  /* (non-Javadoc)
-   * @see org.eclipse.debug.core.ILaunchConfiguration#getPrototypeVisibleAttributes()
-   */
   @Override
   public Set<String> getPrototypeVisibleAttributes() throws CoreException {
-    // TODO(${user}): Auto-generated method stub
     return null;
   }
 
-  /* (non-Javadoc)
-   * @see org.eclipse.debug.core.ILaunchConfiguration#isAttributeModified(java.lang.String)
-   */
   @Override
   public boolean isAttributeModified(String arg0) throws CoreException {
-    // TODO(${user}): Auto-generated method stub
     return false;
   }
 
-  /* (non-Javadoc)
-   * @see org.eclipse.debug.core.ILaunchConfiguration#isPrototype()
-   */
   @Override
   public boolean isPrototype() {
-    // TODO(${user}): Auto-generated method stub
     return false;
   }
 
-  /* (non-Javadoc)
-   * @see org.eclipse.debug.core.ILaunchConfiguration#setPrototypeAttributeVisibility(java.lang.String, boolean)
-   */
   @Override
   public void setPrototypeAttributeVisibility(String arg0, boolean arg1) throws CoreException {
-    // TODO(${user}): Auto-generated method stub
 
   }
 }
