@@ -28,11 +28,14 @@ import com.google.gwt.eclipse.core.properties.GWTProjectProperties;
 import com.google.gwt.eclipse.core.util.Util;
 
 import org.eclipse.core.resources.IProject;
+import org.eclipse.core.resources.ProjectScope;
 import org.eclipse.core.resources.ResourcesPlugin;
 import org.eclipse.core.runtime.CoreException;
 import org.eclipse.core.runtime.IPath;
 import org.eclipse.core.runtime.IStatus;
 import org.eclipse.core.runtime.Path;
+import org.eclipse.core.runtime.preferences.IEclipsePreferences;
+import org.eclipse.core.runtime.preferences.IScopeContext;
 import org.eclipse.core.variables.IStringVariableManager;
 import org.eclipse.core.variables.IValueVariable;
 import org.eclipse.core.variables.VariablesPlugin;
@@ -41,6 +44,7 @@ import org.eclipse.jdt.core.IJavaProject;
 import org.eclipse.jdt.core.JavaCore;
 import org.eclipse.jdt.core.JavaModelException;
 import org.eclipse.jdt.launching.JavaRuntime;
+import org.osgi.service.prefs.BackingStoreException;
 
 import java.io.File;
 import java.io.FileFilter;
@@ -65,18 +69,24 @@ import java.util.Set;
 public abstract class GwtSdk extends AbstractSdk {
 
   /**
-   * A factory that returns a project-bound GWT SDK. Extension points can implement this interface
-   * to return an externally-computed project-bound GWT SDK in response to calls to
+   * A factory that returns a project-bound GWT SDK. Extension points can implement this interface to
+   * return an externally-computed project-bound GWT SDK in response to calls to
    * {@link GwtSdk#findSdkFor(IJavaProject)}.
    */
   public interface IProjectBoundSdkFactory {
     ProjectBoundSdk newInstance(IJavaProject javaProject);
   }
+
   /**
-   * Models an {@link com.google.gdt.eclipse.core.sdk.Sdk} that was detected on a project's
-   * classpath.
+   * Models an {@link com.google.gdt.eclipse.core.sdk.Sdk} that was detected on a project's classpath.
    */
   public static class ProjectBoundSdk extends GwtSdk {
+
+    /**
+     * Use this to persist GWT sdk version with install path to the preferences.
+     */
+    public static final String GWT_VERSION_PREF = "gwtVersion_";
+
     private static IPath getAbsoluteLocation(IPath workspaceRelativePath, IProject project) {
       IPath relativeSourcePath = workspaceRelativePath.removeFirstSegments(1);
       return project.getFolder(relativeSourcePath).getLocation();
@@ -89,32 +99,18 @@ public abstract class GwtSdk extends AbstractSdk {
       this.javaProject = javaProject;
     }
 
-    @Override
-    public String getVersion() {
-      // Retrieving the version of a ProjectBoundSdk via the classloader is SLOW!
-      // This is a workaround that skips the whole procedure if the version string can be found
-      // in the properties of the project instead.
-      String version = GWTProjectProperties.getFixedGwtSdkVersion(javaProject.getProject());
-      if (version == null || version.isEmpty()) {
-        // TODO: Maybe output a warning message here that points out the slow behaviour due to
-        // not having configured the property?
-        return super.getVersion();
-      }
-      return SdkUtils.cleanupVersion(version);
-    }
-
     /**
      * Returns a {@link ClassLoader} that is backed by the project's runtime classpath.
      *
-     * TODO: This returns a classloader which contains ALL of the jars of the project. Lookups on
-     * this thing are going to be SLOW. Can we optimize this? We could create a classloader that
-     * just contains the jars that GWT requires. Maybe caching is the right solution here.
+     * TODO: This returns a classloader which contains ALL of the jars of the project. Lookups on this
+     * thing are going to be SLOW. Can we optimize this? We could create a classloader that just
+     * contains the jars that GWT requires. Maybe caching is the right solution here.
      *
      * TODO: Why can't we just delegate to {@link #getClasspathEntries()} when generating the
      * classloader URLs? Why do we have to add every URL that is part of the project? That would
      * certainly speed up lookups on this classloader. Maybe we cannot do this because project-bound
-     * sdks handle the case of source-based runtimes, and in that case, we need all of the
-     * dependencies as part of the classloader.
+     * sdks handle the case of source-based runtimes, and in that case, we need all of the dependencies
+     * as part of the classloader.
      */
     @Override
     public URLClassLoader createClassLoader() throws SdkException, MalformedURLException {
@@ -135,8 +131,8 @@ public abstract class GwtSdk extends AbstractSdk {
      * Returns the classpath entries from the {@link IJavaProject}'s raw classpath that make up the
      * {@link com.google.gdt.eclipse.core.sdk.Sdk}.
      *
-     * TODO: Can we clean up uses of this method? It really only seems to be useful in the case
-     * where you want to derive a classpath container from an SDK. I'm not sure if this should be a
+     * TODO: Can we clean up uses of this method? It really only seems to be useful in the case where
+     * you want to derive a classpath container from an SDK. I'm not sure if this should be a
      * first-class method on an SDK.
      *
      * TODO: Get rid of this method. It's only needed when a classpath container needs to be
@@ -214,6 +210,52 @@ public abstract class GwtSdk extends AbstractSdk {
       }
     }
 
+    /**
+     * Returns the GWT SDK version.
+     * And persist the version for the SDK install path.
+     * This will speed version lookups once it's being used for the project.
+     */
+    @Override
+    public String getVersion() {
+      // Retrieving the version of a ProjectBoundSdk via the classloader is still SLOW, even if we
+      // cache it after the first time! This is a workaround that skips the whole procedure if the
+      // version string can be found in the properties of the project instead.
+      String version = GWTProjectProperties.getFixedGwtSdkVersion(javaProject.getProject());
+      if (version != null && !version.isEmpty()) {
+        return SdkUtils.cleanupVersion(version);
+      }
+
+
+      IPath installationPath = getInstallationPath();
+      IEclipsePreferences prefs = getProjectProperties(javaProject.getProject());
+
+      // Try getting the cached version for the install path
+      version = prefs.get(GWT_VERSION_PREF + installationPath.toOSString(), null);
+
+      if (version == null || version.isEmpty()) {
+        // Find/search for the version, using a classpath search
+        version = super.getVersion();
+
+        // Persist the GWT Version
+        prefs.put(GWT_VERSION_PREF + installationPath.toOSString(), version);
+        try {
+          // persist the prefs
+          prefs.flush();
+        } catch (BackingStoreException e) {
+          GWTPluginLog.logError(e, "Could not persist gwtVersion for sdk install path. installationPath="
+              + installationPath + " version=" + version);
+          e.printStackTrace();
+        }
+      }
+
+      return version;
+    }
+
+    private static IEclipsePreferences getProjectProperties(IProject project) {
+      IScopeContext projectScope = new ProjectScope(project);
+      return projectScope.getNode(GWTPlugin.PLUGIN_ID);
+    }
+
     @Override
     public File[] getWebAppClasspathFiles(IProject project) {
       IPath installPath = computeInstallPath();
@@ -259,8 +301,7 @@ public abstract class GwtSdk extends AbstractSdk {
     }
 
     /**
-     * Returns the value of the gwt_devjar variable or <code>null</code> if the variable is not
-     * defined.
+     * Returns the value of the gwt_devjar variable or <code>null</code> if the variable is not defined.
      */
     private IPath computeGwtDevJarVariableValue() {
       IStringVariableManager variableManager = VariablesPlugin.getDefault().getStringVariableManager();
@@ -406,13 +447,12 @@ public abstract class GwtSdk extends AbstractSdk {
   private static final File[] NO_FILES = new File[0];
 
   /**
-   * Finds the {@link GwtSdk} used by the specified project. Note that the SDK need not have
-   * been registered.
+   * Finds the {@link GwtSdk} used by the specified project. Note that the SDK need not have been
+   * registered.
    */
   public static GwtSdk findSdkFor(IJavaProject javaProject) {
     ExtensionQuery<GwtSdk.IProjectBoundSdkFactory> extQuery =
-        new ExtensionQuery<GwtSdk.IProjectBoundSdkFactory>(GWTPlugin.PLUGIN_ID, "gwtProjectBoundSdkFactory",
-            "class");
+        new ExtensionQuery<GwtSdk.IProjectBoundSdkFactory>(GWTPlugin.PLUGIN_ID, "gwtProjectBoundSdkFactory", "class");
     List<ExtensionQuery.Data<GwtSdk.IProjectBoundSdkFactory>> sdkFactories = extQuery.getData();
     for (ExtensionQuery.Data<GwtSdk.IProjectBoundSdkFactory> sdkFactory : sdkFactories) {
 
@@ -477,6 +517,7 @@ public abstract class GwtSdk extends AbstractSdk {
     final String exceptionMessage =
         "Cannot get version of GWT SDK \"" + getName() + "\", ensure it is configured properly";
     try {
+      // Load the classpath for the sdk path
       cl = createClassLoader();
       // Extract version from gwt-dev-<platform>
       Class<?> about = cl.loadClass("com.google.gwt.dev.About");
@@ -514,4 +555,5 @@ public abstract class GwtSdk extends AbstractSdk {
 
   @Override
   public abstract IStatus validate();
+
 }

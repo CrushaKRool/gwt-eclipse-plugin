@@ -68,8 +68,8 @@ Download the repo in a zip file.
 
 * [http://storage.googleapis.com/gwt-eclipse-plugin/v3/downloads/repo-3.0.0.zip](http://storage.googleapis.com/gwt-eclipse-plugin/v3/downloads/repo-3.0.0.zip)
 
-### Snapshot
-Unstable update site
+### Staging
+Staging repo for testing before production release.
 
 * [http://storage.googleapis.com/gwt-eclipse-plugin/v3/snapshot](http://storage.googleapis.com/gwt-eclipse-plugin/v3/snapshot)
 
@@ -84,6 +84,10 @@ Simply use Maven to import all the plugins and modules.
 
 ### Target Definition
 The target defintion build is based off of the Google Cloud Tools. Follow their instructions to build.
+
+* [Install the target.tbd plugin](https://github.com/mbarbero/fr.obeo.releng.targetplatform) - Install the targets plugin. 
+* Once the plugin is installed, right click on the target.tbd file and set the target. 
+* Note: The targets will have to be updated by setting the targets. This will regenerate the Eclipse target files.  
 
 ### Build
 Sencha has provided an internal build agent to build. 
