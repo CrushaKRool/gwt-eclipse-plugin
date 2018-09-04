@@ -219,9 +219,9 @@ public class ModuleClasspathProvider extends StandardClasspathProvider {
     }
 
     // Log duplicate jars
-    try {
-      logErrorIfMoreThanGWTSdkOnClassPath(proj, resolvedEntries);
-    } catch (Exception e) {}
+//    try {
+//      logErrorIfMoreThanGWTSdkOnClassPath(proj, resolvedEntries);
+//    } catch (Exception e) {}
 
     createWarOutDirectory(proj);
 
