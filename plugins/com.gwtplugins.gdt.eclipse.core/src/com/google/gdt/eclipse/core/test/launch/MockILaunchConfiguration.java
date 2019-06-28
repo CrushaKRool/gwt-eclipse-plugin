@@ -264,6 +264,11 @@ public class MockILaunchConfiguration implements ILaunchConfiguration {
       public boolean supportsPrototypes() {
         return false;
       }
+
+      @Override
+      public boolean supportsCommandLine() {
+        return false;
+      }
     };
   }
 

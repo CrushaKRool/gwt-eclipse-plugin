@@ -12,7 +12,7 @@
     <tycho.version>1.0.0</tycho.version>
     <tycho-extras.version>1.0.0</tycho-extras.version> <!-- TODO Remove this tag later -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <eclipse.target>oxygen</eclipse.target> <!-- TODO change to photon -->
+    <eclipse.target>2019_06</eclipse.target>
 
     <!-- Repositories that Tycho will use to resolve compilation dependencies. -->
     <eclipse-repo.url>http://download.eclipse.org/releases/${eclipse.target}</eclipse-repo.url>
@@ -347,6 +347,37 @@
                   <groupId>com.gwtplugins.eclipse</groupId>
                   <artifactId>gwt-eclipse-oxygen</artifactId>
                   <version>4.7.0-SNAPSHOT</version>
+                </artifact>
+              </target>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    
+    <profile>
+      <id>build-eclipse-2019_06</id>
+      <activation>
+        <property>
+          <name>!eclipse.target</name>
+        </property>
+      </activation>
+      <properties>
+      </properties>
+      <modules>
+        <module>eclipse/2019_06</module>
+      </modules>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>target-platform-configuration</artifactId>
+            <configuration>
+              <target>
+                <artifact>
+                  <groupId>com.gwtplugins.eclipse</groupId>
+                  <artifactId>gwt-eclipse-2019_06</artifactId>
+                  <version>4.12.0-SNAPSHOT</version>
                 </artifact>
               </target>
             </configuration>
