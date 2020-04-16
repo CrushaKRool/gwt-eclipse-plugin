@@ -269,6 +269,11 @@ public class MockILaunchConfiguration implements ILaunchConfiguration {
       public boolean supportsCommandLine() {
         return false;
       }
+
+      @Override
+      public boolean supportsOutputMerging() {
+        return false;
+      }
     };
   }
 
