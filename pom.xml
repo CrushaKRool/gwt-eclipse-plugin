@@ -12,7 +12,7 @@
     <tycho.version>1.0.0</tycho.version>
     <tycho-extras.version>1.0.0</tycho-extras.version> <!-- TODO Remove this tag later -->
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
-    <eclipse.target>mars</eclipse.target> <!-- TODO change to neon -->
+    <eclipse.target>2020_03</eclipse.target> <!-- TODO change to newest version on update -->
 
     <!-- Repositories that Tycho will use to resolve compilation dependencies. -->
     <eclipse-repo.url>http://download.eclipse.org/releases/${eclipse.target}</eclipse-repo.url>
@@ -257,10 +257,9 @@
     <profile>
       <id>build-eclipse-mars</id>
       <activation>
-        <!-- Default target if no eclipse.target specified. -->
         <property>
-          <name>!eclipse.target</name>
-          <!-- when no longer the default: <name>eclipse.target</name> <value>mars</value> -->
+          <name>eclipse.target</name>
+          <value>mars</value>
         </property>
       </activation>
       <properties>
@@ -348,6 +347,72 @@
                   <groupId>com.gwtplugins.eclipse</groupId>
                   <artifactId>gwt-eclipse-oxygen</artifactId>
                   <version>4.7.0-SNAPSHOT</version>
+                </artifact>
+              </target>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    
+    <profile>
+      <id>build-eclipse-2019_06</id>
+      <activation>
+        <property>
+          <name>eclipse.target</name>
+          <value>2019_06</value>
+        </property>
+      </activation>
+      <properties>
+      </properties>
+      <modules>
+        <module>eclipse/2019_06</module>
+      </modules>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>target-platform-configuration</artifactId>
+            <configuration>
+              <target>
+                <artifact>
+                  <groupId>com.gwtplugins.eclipse</groupId>
+                  <artifactId>gwt-eclipse-2019_06</artifactId>
+                  <version>4.12.0-SNAPSHOT</version>
+                </artifact>
+              </target>
+            </configuration>
+          </plugin>
+        </plugins>
+      </build>
+    </profile>
+    
+    <profile>
+      <id>build-eclipse-2020_03</id>
+      <activation>
+        <property>
+          <!-- Default target if no eclipse.target specified. -->
+          <name>!eclipse.target</name>
+          <value>2020_03</value>
+          <!-- when no longer the default: <name>eclipse.target</name> <value>2020_03</value> -->
+        </property>
+      </activation>
+      <properties>
+      </properties>
+      <modules>
+        <module>eclipse/2020_03</module>
+      </modules>
+      <build>
+        <plugins>
+          <plugin>
+            <groupId>org.eclipse.tycho</groupId>
+            <artifactId>target-platform-configuration</artifactId>
+            <configuration>
+              <target>
+                <artifact>
+                  <groupId>com.gwtplugins.eclipse</groupId>
+                  <artifactId>gwt-eclipse-2020_03</artifactId>
+                  <version>4.15.0-SNAPSHOT</version>
                 </artifact>
               </target>
             </configuration>

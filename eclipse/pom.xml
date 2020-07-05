@@ -1,4 +1,3 @@
-
 <?xml version="1.0" encoding="UTF-8"?>
 <project
   xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd"
@@ -18,6 +17,8 @@
     <module>mars</module>
     <module>neon</module>
     <module>oxygen</module>
+    <module>2019_06</module>
+    <module>2020_03</module>
     <module>ide-target-platform</module>
   </modules>
 

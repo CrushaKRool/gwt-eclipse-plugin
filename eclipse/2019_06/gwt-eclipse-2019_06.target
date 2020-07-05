@@ -1,0 +1,52 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?pde?>
+<!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
+<target name="GWT Eclipse Plugin for 2019_06" sequenceNumber="1593977625">
+  <locations>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.eclipse.license.feature.group" version="2.0.2.v20181016-2210"/>
+      <repository location="https://download.eclipse.org/cbi/updates/license"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.eclipse.sdk.feature.group" version="4.12.0.v20190605-1801"/>
+      <unit id="org.eclipse.jdt.feature.group" version="3.18.0.v20190605-1800"/>
+      <unit id="org.eclipse.m2e.feature.feature.group" version="1.12.0.20190529-1916"/>
+      <unit id="org.eclipse.m2e.sdk.feature.feature.group" version="1.12.0.20190529-1916"/>
+      <unit id="org.eclipse.m2e.wtp.feature.feature.group" version="1.4.2.20190530-0057"/>
+      <unit id="org.eclipse.m2e.wtp.sdk.feature.feature.group" version="1.4.2.20190530-0057"/>
+      <unit id="org.eclipse.mylyn.commons.feature.group" version="3.24.2.v20180904-2231"/>
+      <unit id="org.eclipse.jpt.jpa.feature.feature.group" version="3.5.101.v201903221940"/>
+      <unit id="org.eclipse.datatools.sdk.feature.feature.group" version="1.14.101.201811012051"/>
+      <unit id="org.eclipse.swtbot.eclipse.feature.group" version="2.8.0.201906121535"/>
+      <unit id="org.eclipse.epp.logging.aeri.feature.feature.group" version="2.0.7.v20180504-0806"/>
+      <unit id="org.eclipse.epp.logging.aeri.feature.source.feature.group" version="2.0.7.v20180504-0806"/>
+      <unit id="org.eclipse.jetty.http" version="9.4.18.v20190429"/>
+      <unit id="org.eclipse.jetty.servlet" version="9.4.18.v20190429"/>
+      <unit id="org.eclipse.jetty.server" version="9.4.18.v20190429"/>
+      <unit id="org.eclipse.jetty.util" version="9.4.18.v20190429"/>
+      <repository location="https://download.eclipse.org/releases/2019-06"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.eclipse.jst.web_sdk.feature.feature.group" version="3.9.0.v201903222115"/>
+      <unit id="org.eclipse.jst.server_sdk.feature.feature.group" version="3.4.301.v201901310132"/>
+      <unit id="org.eclipse.jst.common.fproj.enablement.jdt.sdk.feature.group" version="3.8.0.v201903222010"/>
+      <unit id="org.eclipse.wst.common.fproj.sdk.feature.group" version="3.7.1.v201903222010"/>
+      <unit id="org.eclipse.wst.web_sdk.feature.feature.group" version="3.13.0.v201901100226"/>
+      <unit id="org.eclipse.jst.enterprise_sdk.feature.feature.group" version="3.8.100.v201903222115"/>
+      <unit id="org.eclipse.wst.server_adapters.sdk.feature.feature.group" version="3.2.601.v201901310132"/>
+      <repository location="https://download.eclipse.org/webtools/downloads/drops/R3.14.0/I-latest/repository"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="org.hamcrest" version="1.1.0.v20090501071000"/>
+      <repository location="https://download.eclipse.org/tools/orbit/downloads/drops/R20190602212107/repository/"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="com.google.cloud.tools.eclipse.suite.feature.feature.group" version="1.8.4.202002191941"/>
+      <repository location="https://dl.google.com/eclipse/google-cloud-eclipse/stable/"/>
+    </location>
+    <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
+      <unit id="com.github.sdbg.feature.feature.group" version="1.0.10.201610081555"/>
+      <repository location="http://sdbg.github.io/p2/"/>
+    </location>
+  </locations>
+</target>
