@@ -15,7 +15,8 @@
     <eclipse.target>2020_03</eclipse.target> <!-- TODO change to newest version on update -->
 
     <!-- Repositories that Tycho will use to resolve compilation dependencies. -->
-    <eclipse-repo.url>http://download.eclipse.org/releases/${eclipse.target}</eclipse-repo.url>
+    <!-- TODO change to newest version on update -->
+    <eclipse-repo.url>http://download.eclipse.org/releases/2020-03</eclipse-repo.url>
     <swtbot-repo.url>http://download.eclipse.org/technology/swtbot/releases/latest/</swtbot-repo.url>
     <sdbg-repo.url>http://sdbg.github.io/p2/</sdbg-repo.url>
 
