@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <?pde?>
 <!-- generated with https://github.com/eclipse-cbi/targetplatform-dsl -->
-<target name="GWT Eclipse Plugin for 2020_03" sequenceNumber="1593975910">
+<target name="GWT Eclipse Plugin for 2020_03" sequenceNumber="1594152707">
   <locations>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.eclipse.license.feature.group" version="2.0.2.v20181016-2210"/>
@@ -34,7 +34,7 @@
       <unit id="org.eclipse.wst.web_sdk.feature.feature.group" version="3.17.0.v202001081257"/>
       <unit id="org.eclipse.jst.enterprise_sdk.feature.feature.group" version="3.15.0.v201908261515"/>
       <unit id="org.eclipse.wst.server_adapters.sdk.feature.feature.group" version="3.2.700.v201910252115"/>
-      <repository location="https://download.eclipse.org/webtools/downloads/drops/R3.17.0/I-latest/repository"/>
+      <repository location="https://download.eclipse.org/webtools/downloads/drops/R3.17.0/R-3.17.0-20200306035042/repository"/>
     </location>
     <location includeMode="planner" includeAllPlatforms="false" includeSource="true" includeConfigurePhase="false" type="InstallableUnit">
       <unit id="org.hamcrest" version="1.1.0.v20090501071000"/>

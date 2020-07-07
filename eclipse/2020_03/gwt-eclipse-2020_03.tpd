@@ -39,7 +39,7 @@ location "https://download.eclipse.org/releases/2020-03" {
 
 
 // WTP SDKs aren't exposed through the main release links
-location "https://download.eclipse.org/webtools/downloads/drops/R3.17.0/I-latest/repository" {
+location "https://download.eclipse.org/webtools/downloads/drops/R3.17.0/R-3.17.0-20200306035042/repository" {
     org.eclipse.jst.web_sdk.feature.feature.group
     org.eclipse.jst.server_sdk.feature.feature.group
     org.eclipse.jst.common.fproj.enablement.jdt.sdk.feature.group
